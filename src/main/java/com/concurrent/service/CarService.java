@@ -1,4 +1,4 @@
-package com.concurrent.concurrent.service;
+package com.concurrent.service;
 
 import org.springframework.stereotype.Service;
 

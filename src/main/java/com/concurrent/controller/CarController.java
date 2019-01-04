@@ -1,7 +1,7 @@
-package com.concurrent.concurrent.controller;
+package com.concurrent.controller;
 
-import com.concurrent.concurrent.model.Car;
-import com.concurrent.concurrent.repository.CarRepository;
+import com.concurrent.model.Car;
+import com.concurrent.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

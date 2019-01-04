@@ -1,4 +1,4 @@
-package com.concurrent.concurrent.model;
+package com.concurrent.model;
 import lombok.*;
 
 import javax.persistence.Id;
@@ -9,7 +9,8 @@ import javax.persistence.Entity;
 @Data
 @NoArgsConstructor
 public class Car {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private @NonNull String name;
 }
