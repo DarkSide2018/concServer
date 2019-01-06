@@ -8,10 +8,9 @@ import com.concurrent.repository.BookChapterRepoitory;
 import com.concurrent.repository.BookContentRepository;
 import com.concurrent.repository.BookRepository;
 import com.concurrent.repository.BookSectionRepository;
+import com.concurrent.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -21,16 +20,19 @@ public class BookController {
     private BookChapterRepoitory chapterRepoitory;
     private BookContentRepository contentRepository;
     private BookSectionRepository sectionRepository;
+    private BookService bookService;
 
     @Autowired
     public BookController(BookRepository bookRepository,
                           BookChapterRepoitory chapterRepoitory,
                           BookContentRepository contentRepository,
-                          BookSectionRepository sectionRepository) {
+                          BookSectionRepository sectionRepository,
+                          BookService bookService) {
         this.bookRepository = bookRepository;
         this.chapterRepoitory = chapterRepoitory;
         this.contentRepository = contentRepository;
         this.sectionRepository = sectionRepository;
+        this.bookService = bookService;
     }
 
     @GetMapping("/book")
@@ -54,6 +56,11 @@ public class BookController {
         return sectionRepository.findAll();
     }
 
+    @GetMapping("/bookSectionById")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Collection<BookContent> getContentBySection(@RequestParam Long id){
+        return bookService.getSectionById(id);
+    }
     @GetMapping("/bookContent")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookContent> getContents() {
