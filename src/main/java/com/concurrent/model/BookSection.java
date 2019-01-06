@@ -17,6 +17,8 @@ public class BookSection {
     @GeneratedValue
     private long id;
     private String title;
+    @Column(columnDefinition="CLOB")
+    private String description;
     @OneToMany(targetEntity = BookContent.class,cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<BookContent> bookContentList;
 
