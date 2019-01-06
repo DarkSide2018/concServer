@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 public class BookController {
@@ -35,25 +35,28 @@ public class BookController {
 
     @GetMapping("/book")
     @CrossOrigin(origins = "http://localhost:4200")
+    //Скоро нужно будет возвращать Collection
     public Book getBook() {
+
         return bookRepository.findAll().get(0);
     }
 
     @GetMapping("/bookChapter")
     @CrossOrigin(origins = "http://localhost:4200")
-    public List<BookChapter> getChapters() {
+    // почему то нужно возращать именно Collection List вернуть не получилось
+    public Collection<BookChapter> getChapters() {
         return chapterRepoitory.findAll();
     }
 
     @GetMapping("/bookSection")
     @CrossOrigin(origins = "http://localhost:4200")
-    public List<BookSection> getSections() {
+    public Collection<BookSection> getSections() {
         return sectionRepository.findAll();
     }
 
     @GetMapping("/bookContent")
     @CrossOrigin(origins = "http://localhost:4200")
-    public List<BookContent> getContents() {
+    public Collection<BookContent> getContents() {
         return contentRepository.findAll();
     }
 
