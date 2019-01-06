@@ -24,8 +24,9 @@ public class BookChapter {
         this.title = title;
     }
 
-    public void addBookSection(BookSection section) {
+    public BookChapter addBookSection(BookSection section) {
         if (sectionList == null) sectionList = new ArrayList<>();
         sectionList.add(section);
+        return this;
     }
 }
