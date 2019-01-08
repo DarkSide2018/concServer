@@ -53,7 +53,7 @@ public class BookController {
     @GetMapping("/bookSection")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookSection> getSections() {
-        return sectionRepository.findAll();
+       return sectionRepository.findAll();
     }
 
     @GetMapping("/bookSectionById")
