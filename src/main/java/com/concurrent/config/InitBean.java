@@ -15,8 +15,15 @@ import java.nio.charset.Charset;
 
 @Component
 public class InitBean {
-    @Autowired
     private BookRepository bookRepository;
+
+
+    @Autowired
+    public InitBean(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+
 
 
     @PostConstruct
@@ -61,9 +68,7 @@ public class InitBean {
                 .addBookSection(bookSection13);
         bookRepository.save(book);
     }
-    private void invokeMongo(){
 
-    }
     private String computeDescription(String url) {
         InputStream res12 = Thread
                 .currentThread()
