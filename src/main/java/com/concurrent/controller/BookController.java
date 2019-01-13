@@ -37,7 +37,7 @@ public class BookController {
 
     @GetMapping("/book")
     @CrossOrigin(origins = "http://localhost:4200")
-    //Скоро нужно будет возвращать Collection
+    //soon need return Collection
     public Book getBook() {
 
         return bookRepository.findAll().get(0);
@@ -45,7 +45,7 @@ public class BookController {
 
     @GetMapping("/bookChapter")
     @CrossOrigin(origins = "http://localhost:4200")
-    // почему то нужно возращать именно Collection List вернуть не получилось
+    // should return  Collection,  cannot return List
     public Collection<BookChapter> getChapters() {
         return chapterRepoitory.findAll();
     }
@@ -53,18 +53,38 @@ public class BookController {
     @GetMapping("/bookSection")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookSection> getSections() {
-       return sectionRepository.findAll();
+        return sectionRepository.findAll();
+    }
+
+    @PostMapping("/bookSection")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public BookSection saveSection(BookSection section) {
+        sectionRepository.save(section);
+        return section;
+    }
+
+    @PutMapping("/bookSection")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public BookSection updateSection(BookSection section) {
+        sectionRepository.save(section);
+        return section;
+    }
+
+    @DeleteMapping("/bookSection")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public void deleteSection(Long id) {
+        sectionRepository.deleteById(id);
     }
 
     @GetMapping("/bookSectionById")
     @CrossOrigin(origins = "http://localhost:4200")
-    public Collection<BookContent> getContentBySection(@RequestParam Long id){
+    public Collection<BookContent> getContentBySection(@RequestParam Long id) {
         return bookService.getSectionById(id);
     }
+
     @GetMapping("/bookContent")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookContent> getContents() {
         return contentRepository.findAll();
     }
-
 }
