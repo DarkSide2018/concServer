@@ -10,14 +10,23 @@ import java.util.List;
 
 @Service
 public class BookService {
+    public static final BookSection EMPTY_SECTION = new BookSection("empty");
     @Autowired
     private BookSectionRepository sectionRepository;
 
-    public List<BookContent> getSectionById(Long id) {
+    public List<BookContent> getContentBySection(Long id) {
+
         return sectionRepository
                 .findById(id)
-                .orElse(new BookSection("empty"))
+                .orElse(EMPTY_SECTION)
                 .getBookContentList();
+    }
+
+
+    public BookSection getSectionById(Long id){
+        return sectionRepository
+                .findById(id)
+                .orElse(EMPTY_SECTION);
     }
 
 }

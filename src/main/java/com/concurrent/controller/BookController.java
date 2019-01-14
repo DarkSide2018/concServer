@@ -76,9 +76,15 @@ public class BookController {
         sectionRepository.deleteById(id);
     }
 
-    @GetMapping("/bookSectionById")
+    @GetMapping("/bookContentBySectionId")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookContent> getContentBySection(@RequestParam Long id) {
+        return bookService.getContentBySection(id);
+    }
+
+    @GetMapping("/bookSectionById")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public BookSection getSectionById(@RequestParam Long id) {
         return bookService.getSectionById(id);
     }
 
