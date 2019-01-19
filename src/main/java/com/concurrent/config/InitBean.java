@@ -4,7 +4,8 @@ import com.concurrent.model.Book;
 import com.concurrent.model.BookChapter;
 import com.concurrent.model.BookContent;
 import com.concurrent.model.BookSection;
-import com.concurrent.repository.BookRepository;
+import com.concurrent.repository.BookMongoRep;
+import com.concurrent.repository.BookSectionMongoRep;
 import io.micrometer.core.instrument.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,20 +16,18 @@ import java.nio.charset.Charset;
 
 @Component
 public class InitBean {
-    private BookRepository bookRepository;
-
-
     @Autowired
-    public InitBean(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    private BookMongoRep bookRepository;
+    @Autowired
+    private BookSectionMongoRep sectionMongoRep;
+
 
 
 
 
     @PostConstruct
     public void fillTestData() {
-
+        bookRepository.deleteAll();
         BookSection bookSection12 = new BookSection("1.2 Преимущества потоков");
         bookSection12.setDescription(computeDescription("txt/1.2_threadAdvantages"));
         BookContent bookContent121 = new BookContent("1.2.1 Использование нескольких процессоров");
@@ -62,6 +61,7 @@ public class InitBean {
                 .addBookContent(bookContent131)
                 .addBookContent(bookContent132)
                 .addBookContent(bookContent133);
+        sectionMongoRep.save(bookSection13);
         bookChapter1
                 .addBookSection(bookSection11)
                 .addBookSection(bookSection12)

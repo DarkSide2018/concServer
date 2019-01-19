@@ -2,7 +2,7 @@ package com.concurrent.service;
 
 import com.concurrent.model.BookContent;
 import com.concurrent.model.BookSection;
-import com.concurrent.repository.BookSectionRepository;
+import com.concurrent.repository.BookSectionMongoRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class BookService {
     public static final BookSection EMPTY_SECTION = new BookSection("empty");
     @Autowired
-    private BookSectionRepository sectionRepository;
+    private BookSectionMongoRep sectionRepository;
 
     public List<BookContent> getContentBySection(Long id) {
 

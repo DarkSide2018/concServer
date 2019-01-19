@@ -3,15 +3,15 @@ package com.concurrent.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Document(collection="bookContents")
 @Entity
 @Data
 @NoArgsConstructor
+@Embeddable
 @AllArgsConstructor
 public class BookContent {
     @Id

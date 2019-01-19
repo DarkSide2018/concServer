@@ -4,29 +4,30 @@ import com.concurrent.model.Book;
 import com.concurrent.model.BookChapter;
 import com.concurrent.model.BookContent;
 import com.concurrent.model.BookSection;
-import com.concurrent.repository.BookChapterRepoitory;
-import com.concurrent.repository.BookContentRepository;
-import com.concurrent.repository.BookRepository;
-import com.concurrent.repository.BookSectionRepository;
+import com.concurrent.repository.BookChapterMongoRep;
+import com.concurrent.repository.BookContentMongoRep;
+import com.concurrent.repository.BookMongoRep;
+import com.concurrent.repository.BookSectionMongoRep;
 import com.concurrent.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
 public class BookController {
-    private BookRepository bookRepository;
-    private BookChapterRepoitory chapterRepoitory;
-    private BookContentRepository contentRepository;
-    private BookSectionRepository sectionRepository;
+    private BookMongoRep bookRepository;
+    private BookChapterMongoRep chapterRepoitory;
+    private BookContentMongoRep contentRepository;
+    private BookSectionMongoRep sectionRepository;
     private BookService bookService;
 
     @Autowired
-    public BookController(BookRepository bookRepository,
-                          BookChapterRepoitory chapterRepoitory,
-                          BookContentRepository contentRepository,
-                          BookSectionRepository sectionRepository,
+    public BookController(BookMongoRep bookRepository,
+                          BookChapterMongoRep chapterRepoitory,
+                          BookContentMongoRep contentRepository,
+                          BookSectionMongoRep sectionRepository,
                           BookService bookService) {
         this.bookRepository = bookRepository;
         this.chapterRepoitory = chapterRepoitory;
@@ -47,13 +48,15 @@ public class BookController {
     @CrossOrigin(origins = "http://localhost:4200")
     // should return  Collection,  cannot return List
     public Collection<BookChapter> getChapters() {
-        return chapterRepoitory.findAll();
+        return getBook().getChapterList();
     }
 
     @GetMapping("/bookSection")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookSection> getSections() {
-        return sectionRepository.findAll();
+        ArrayList<BookChapter> bookChapters = new ArrayList<>(getChapters());
+
+        return bookChapters.get(0).getSectionList();
     }
 
     @PostMapping("/bookSection")
@@ -84,7 +87,8 @@ public class BookController {
 
     @GetMapping("/bookSectionById")
     @CrossOrigin(origins = "http://localhost:4200")
-    public BookSection getSectionById(@RequestParam Long id) {
+    public BookSection getSectionById(@RequestParam Long id)
+    {
         return bookService.getSectionById(id);
     }
 
@@ -92,5 +96,11 @@ public class BookController {
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookContent> getContents() {
         return contentRepository.findAll();
+    }
+
+    @GetMapping("/bookContentById")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public BookContent getContentById(@RequestParam Long id) {
+        return contentRepository.findById(id).orElse(new BookContent());
     }
 }
