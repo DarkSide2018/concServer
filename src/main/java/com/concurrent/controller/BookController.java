@@ -12,7 +12,6 @@ import com.concurrent.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
@@ -48,15 +47,13 @@ public class BookController {
     @CrossOrigin(origins = "http://localhost:4200")
     // should return  Collection,  cannot return List
     public Collection<BookChapter> getChapters() {
-        return getBook().getChapterList();
+        return chapterRepoitory.findAll();
     }
 
     @GetMapping("/bookSection")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookSection> getSections() {
-        ArrayList<BookChapter> bookChapters = new ArrayList<>(getChapters());
-
-        return bookChapters.get(0).getSectionList();
+        return sectionRepository.findAll();
     }
 
     @PostMapping("/bookSection")
@@ -87,8 +84,7 @@ public class BookController {
 
     @GetMapping("/bookSectionById")
     @CrossOrigin(origins = "http://localhost:4200")
-    public BookSection getSectionById(@RequestParam Long id)
-    {
+    public BookSection getSectionById(@RequestParam Long id) {
         return bookService.getSectionById(id);
     }
 

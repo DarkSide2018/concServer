@@ -1,5 +1,6 @@
 package com.concurrent;
 
+import com.concurrent.config.CascadeSaveMongoEventListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -30,6 +31,10 @@ public class ConcurrentApplication {
 
         return new MongoTemplate(mongoDbFactory, converter);
 
+    }
+    @Bean
+    public CascadeSaveMongoEventListener userCascadingMongoEventListener() {
+        return new CascadeSaveMongoEventListener();
     }
 }
 

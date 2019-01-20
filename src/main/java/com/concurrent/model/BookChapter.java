@@ -1,14 +1,19 @@
 package com.concurrent.model;
 
+import com.concurrent.config.CascadeSave;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.UUID;
 
 @Document(collection="bookChapters")
 @Entity
@@ -20,10 +25,11 @@ public class BookChapter {
     @Id
     @GeneratedValue
     private long id;
+
     private String title;
-    @OneToMany(targetEntity = BookSection.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @DBRef(db = "bookSections")
-    private List<BookSection> sectionList;
+    @CascadeSave
+    private Collection<BookSection> sectionList;
 
     public BookChapter(String title) {
         this.title = title;

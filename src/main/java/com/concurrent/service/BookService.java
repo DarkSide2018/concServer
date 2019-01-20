@@ -6,6 +6,7 @@ import com.concurrent.repository.BookSectionMongoRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -14,7 +15,7 @@ public class BookService {
     @Autowired
     private BookSectionMongoRep sectionRepository;
 
-    public List<BookContent> getContentBySection(Long id) {
+    public Collection<BookContent> getContentBySection(Long id) {
 
         return sectionRepository
                 .findById(id)

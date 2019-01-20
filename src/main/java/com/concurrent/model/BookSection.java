@@ -1,5 +1,6 @@
 package com.concurrent.model;
 
+import com.concurrent.config.CascadeSave;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +9,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 @Document(collection="bookSections")
 @Entity
 @Data
 @NoArgsConstructor
 @Embeddable
 @AllArgsConstructor
-public class BookSection {
+public class BookSection implements Countable {
     @Id
     @GeneratedValue
     private long id;
@@ -24,7 +25,8 @@ public class BookSection {
     private String description;
     @OneToMany(targetEntity = BookContent.class,cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @DBRef(db = "bookContents")
-    private List<BookContent> bookContentList;
+    @CascadeSave
+    private Collection<BookContent> bookContentList;
 
     public BookSection(String title) {
         this.title = title;
@@ -34,5 +36,10 @@ public class BookSection {
         if (bookContentList == null) bookContentList = new ArrayList<>();
         bookContentList.add(bookContent);
         return this;
+    }
+
+    @Override
+    public void countId(Long id) {
+        this.id=id;
     }
 }

@@ -28,6 +28,7 @@ public class InitBean {
     @PostConstruct
     public void fillTestData() {
         bookRepository.deleteAll();
+        sectionMongoRep.deleteAll();
         BookSection bookSection12 = new BookSection("1.2 Преимущества потоков");
         bookSection12.setDescription(computeDescription("txt/1.2_threadAdvantages"));
         BookContent bookContent121 = new BookContent("1.2.1 Использование нескольких процессоров");
@@ -61,7 +62,6 @@ public class InitBean {
                 .addBookContent(bookContent131)
                 .addBookContent(bookContent132)
                 .addBookContent(bookContent133);
-        sectionMongoRep.save(bookSection13);
         bookChapter1
                 .addBookSection(bookSection11)
                 .addBookSection(bookSection12)
