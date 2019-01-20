@@ -4,6 +4,7 @@ import com.concurrent.model.Book;
 import com.concurrent.model.BookChapter;
 import com.concurrent.model.BookContent;
 import com.concurrent.model.BookSection;
+import com.concurrent.repository.BookContentMongoRep;
 import com.concurrent.repository.BookMongoRep;
 import com.concurrent.repository.BookSectionMongoRep;
 import io.micrometer.core.instrument.util.IOUtils;
@@ -20,15 +21,13 @@ public class InitBean {
     private BookMongoRep bookRepository;
     @Autowired
     private BookSectionMongoRep sectionMongoRep;
-
-
-
-
-
+    @Autowired
+    private BookContentMongoRep contentMongoRep;
     @PostConstruct
     public void fillTestData() {
         bookRepository.deleteAll();
         sectionMongoRep.deleteAll();
+        contentMongoRep.deleteAll();
         BookSection bookSection12 = new BookSection("1.2 Преимущества потоков");
         bookSection12.setDescription(computeDescription("txt/1.2_threadAdvantages"));
         BookContent bookContent121 = new BookContent("1.2.1 Использование нескольких процессоров");

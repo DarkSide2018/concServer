@@ -1,6 +1,6 @@
 package com.concurrent.config;
 
-import com.concurrent.model.Countable;
+import com.concurrent.model.BaseEn;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.util.ReflectionUtils;
@@ -11,10 +11,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static com.concurrent.config.CascadeSaveMongoEventListener.atomicLong;
+
 public class CascadeCallback implements ReflectionUtils.FieldCallback {
     private Object source;
     private MongoOperations mongoOperations;
-    private AtomicLong atomicLong = new AtomicLong();
+
 
     CascadeCallback(final Object source, final MongoOperations mongoOperations) {
         this.source = source;
@@ -23,7 +25,6 @@ public class CascadeCallback implements ReflectionUtils.FieldCallback {
 
     @Override
     public void doWith(final Field field) throws IllegalArgumentException, IllegalAccessException {
-        atomicLong.set(0);
         ReflectionUtils.makeAccessible(field);
         if (field.isAnnotationPresent(DBRef.class) && field.isAnnotationPresent(CascadeSave.class)) {
             final Object fieldValue = field.get(getSource());
@@ -33,8 +34,9 @@ public class CascadeCallback implements ReflectionUtils.FieldCallback {
                 if (fieldValue instanceof Collection) {
                     List list = new ArrayList((Collection) fieldValue);
                     list.forEach(e -> {
-                        if (e instanceof Countable) {
-                            ((Countable) e).countId((Long) atomicLong.getAndIncrement());
+                        if (e instanceof BaseEn) {
+
+                            ((BaseEn) e).setId((Long) atomicLong.getAndIncrement());
                         }
                         getMongoOperations().save(e);
                     });

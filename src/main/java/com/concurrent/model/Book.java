@@ -8,8 +8,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collection;
 @Document(collection="books")
@@ -17,13 +15,11 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
-    @Id
-    @GeneratedValue
-    private long id;
+public class Book extends BaseEn {
+
     private String title;
 
-    @DBRef(db = "bookChapters")
+    @DBRef(db = "bookChapters",lazy = true)
     @CascadeSave
     private Collection<BookChapter> chapterList;
 
@@ -35,6 +31,7 @@ public class Book {
         if (chapterList == null) {
             chapterList = new ArrayList<>();
         }
+        chapter.setBookId(getUid());
         chapterList.add(chapter);
     }
 }

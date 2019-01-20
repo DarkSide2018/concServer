@@ -2,12 +2,12 @@ package com.concurrent.service;
 
 import com.concurrent.model.BookContent;
 import com.concurrent.model.BookSection;
+import com.concurrent.repository.BookContentMongoRep;
 import com.concurrent.repository.BookSectionMongoRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class BookService {
@@ -15,16 +15,18 @@ public class BookService {
     @Autowired
     private BookSectionMongoRep sectionRepository;
 
+    @Autowired
+    private BookContentMongoRep contentMongoRep;
+
+
     public Collection<BookContent> getContentBySection(Long id) {
 
-        return sectionRepository
-                .findById(id)
-                .orElse(EMPTY_SECTION)
-                .getBookContentList();
+        BookSection bookSection = sectionRepository.findById(id).orElse(EMPTY_SECTION);
+        return contentMongoRep.findBookContentBySectionId(bookSection.getUid());
     }
 
 
-    public BookSection getSectionById(Long id){
+    public BookSection getSectionById(Long id) {
         return sectionRepository
                 .findById(id)
                 .orElse(EMPTY_SECTION);

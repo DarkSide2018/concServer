@@ -5,28 +5,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 
-@Document(collection="bookContents")
+@Document(collection = "bookContents")
 @Entity
 @Data
 @NoArgsConstructor
 @Embeddable
 @AllArgsConstructor
-public class BookContent implements Countable {
-    @Id
-    @GeneratedValue
-    private long id;
+public class BookContent extends BaseEn {
+
     private String title;
-    @Column(columnDefinition="CLOB")
+
+    private String sectionId;
+
+    @Column(columnDefinition = "CLOB")
     private String content;
 
     public BookContent(String title) {
         this.title = title;
     }
 
-    @Override
-    public void countId(Long id) {
-        this.id = id;
-    }
 }

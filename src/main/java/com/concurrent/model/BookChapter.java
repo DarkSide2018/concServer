@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -20,12 +18,12 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class BookChapter {
-    @Id
-    @GeneratedValue
-    private long id;
+public class BookChapter extends BaseEn{
 
     private String title;
+
+    private String bookId;
+
     @DBRef(db = "bookSections")
     @CascadeSave
     private Collection<BookSection> sectionList;
@@ -36,6 +34,7 @@ public class BookChapter {
 
     public BookChapter addBookSection(BookSection section) {
         if (sectionList == null) sectionList = new ArrayList<>();
+        section.setChapterId(getUid());
         sectionList.add(section);
         return this;
     }

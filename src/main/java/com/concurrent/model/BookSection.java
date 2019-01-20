@@ -10,20 +10,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
-@Document(collection="bookSections")
+
+@Document(collection = "bookSections")
 @Entity
 @Data
 @NoArgsConstructor
 @Embeddable
 @AllArgsConstructor
-public class BookSection implements Countable {
-    @Id
-    @GeneratedValue
-    private long id;
+public class BookSection extends BaseEn {
+
     private String title;
-    @Column(columnDefinition="CLOB")
+
+    private String chapterId;
+
+    @Column(columnDefinition = "CLOB")
     private String description;
-    @OneToMany(targetEntity = BookContent.class,cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = BookContent.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @DBRef(db = "bookContents")
     @CascadeSave
     private Collection<BookContent> bookContentList;
@@ -34,12 +36,9 @@ public class BookSection implements Countable {
 
     public BookSection addBookContent(BookContent bookContent) {
         if (bookContentList == null) bookContentList = new ArrayList<>();
+        bookContent.setSectionId(getUid());
         bookContentList.add(bookContent);
         return this;
     }
 
-    @Override
-    public void countId(Long id) {
-        this.id=id;
-    }
 }
