@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
 
 @Document(collection="bookChapters")
 @Entity
@@ -41,3 +40,4 @@ public class BookChapter {
         return this;
     }
 }
+

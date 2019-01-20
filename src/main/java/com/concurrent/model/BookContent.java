@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Embeddable
 @AllArgsConstructor
-public class BookContent {
+public class BookContent implements Countable {
     @Id
     @GeneratedValue
     private long id;
@@ -23,5 +23,10 @@ public class BookContent {
 
     public BookContent(String title) {
         this.title = title;
+    }
+
+    @Override
+    public void countId(Long id) {
+        this.id = id;
     }
 }
