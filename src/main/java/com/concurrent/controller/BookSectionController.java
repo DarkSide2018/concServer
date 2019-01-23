@@ -9,42 +9,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookSectionController {
 
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
+
+    private final BookSectionMongoRep sectionRepository;
 
     @Autowired
-    private BookSectionMongoRep sectionRepository;
+    public BookSectionController(BookService bookService, BookSectionMongoRep sectionRepository) {
+        this.bookService = bookService;
+        this.sectionRepository = sectionRepository;
+    }
 
     @GetMapping("/bookSection")
-    @CrossOrigin(origins = "http://localhost:4200")
     public Collection<BookSection> getSections() {
         return sectionRepository.findAll();
     }
 
     @PostMapping("/bookSection")
-    @CrossOrigin(origins = "http://localhost:4200")
     public BookSection saveSection(BookSection section) {
         sectionRepository.save(section);
         return section;
     }
 
     @PutMapping("/bookSection")
-    @CrossOrigin(origins = "http://localhost:4200")
     public BookSection updateSection(BookSection section) {
         sectionRepository.save(section);
         return section;
     }
 
     @DeleteMapping("/bookSection")
-    @CrossOrigin(origins = "http://localhost:4200")
     public void deleteSection(Long id) {
         sectionRepository.deleteById(id);
     }
 
     @GetMapping("/bookSectionById")
-    @CrossOrigin(origins = "http://localhost:4200")
     public BookSection getSectionById(@RequestParam Long id) {
         return bookService.getSectionById(id);
     }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookController {
     private BookMongoRep bookRepository;
     private BookChapterMongoRep chapterRepoitory;
@@ -24,7 +25,6 @@ public class BookController {
     }
 
     @GetMapping("/book")
-    @CrossOrigin(origins = "http://localhost:4200")
     //soon need return Collection
     public Book getBook() {
 
@@ -32,7 +32,6 @@ public class BookController {
     }
 
     @GetMapping("/bookChapter")
-    @CrossOrigin(origins = "http://localhost:4200")
     // should return  Collection,  cannot return List
     public Collection<BookChapter> getChapters() {
         return chapterRepoitory.findAll();

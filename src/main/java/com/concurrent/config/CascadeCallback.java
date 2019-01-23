@@ -9,7 +9,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import static com.concurrent.config.CascadeSaveMongoEventListener.atomicLong;
 
@@ -35,7 +34,6 @@ public class CascadeCallback implements ReflectionUtils.FieldCallback {
                     List list = new ArrayList((Collection) fieldValue);
                     list.forEach(e -> {
                         if (e instanceof BaseEn) {
-
                             ((BaseEn) e).setId((Long) atomicLong.getAndIncrement());
                         }
                         getMongoOperations().save(e);
