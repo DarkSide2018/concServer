@@ -23,11 +23,14 @@ public class InitBean {
     private BookSectionMongoRep sectionMongoRep;
     @Autowired
     private BookContentMongoRep contentMongoRep;
+
     @PostConstruct
     public void fillTestData() {
         bookRepository.deleteAll();
         sectionMongoRep.deleteAll();
         contentMongoRep.deleteAll();
+        Book book = new Book("Ru Concurrency in practice");
+        BookChapter bookChapter1 = new BookChapter("Введение");
         BookSection bookSection12 = new BookSection("1.2 Преимущества потоков");
         bookSection12.setDescription(computeDescription("txt/1.2_threadAdvantages"));
         BookContent bookContent121 = new BookContent("1.2.1 Использование нескольких процессоров");
@@ -38,17 +41,8 @@ public class InitBean {
         bookContent123.setContent(computeDescription("txt/1.2.3_simpleAsyncEvents"));
         BookContent bookContent124 = new BookContent("1.2.4 Более отзывчивый пользовательский интерфейс");
         bookContent124.setContent(computeDescription("txt/1.2.4_userFriendlyInterface"));
-        bookSection12
-                .addBookContent(bookContent121)
-                .addBookContent(bookContent122)
-                .addBookContent(bookContent123)
-                .addBookContent(bookContent124);
         BookSection bookSection11 = new BookSection("1.1 Очень краткая история параллелизма");
         bookSection11.setDescription(computeDescription("txt/1.1_shortStory"));
-        Book book = new Book("Ru Concurrency in practice");
-        BookChapter bookChapter1 = new BookChapter("Введение");
-        book.addChapter(bookChapter1);
-
         BookSection bookSection13 = new BookSection("1.3 Риски, которые несут потоки");
         bookSection13.setDescription(computeDescription("txt/1.3_threadRisks"));
         BookContent bookContent131 = new BookContent("1.3.1 Угрозы безопасности");
@@ -57,6 +51,11 @@ public class InitBean {
         bookContent132.setContent(computeDescription("txt/1.3.2_dangerThreadLife"));
         BookContent bookContent133 = new BookContent("1.3.3 Угрозы производительности");
         bookContent133.setContent(computeDescription("txt/1.3.3_dangerPerfomance"));
+        bookSection12
+                .addBookContent(bookContent121)
+                .addBookContent(bookContent122)
+                .addBookContent(bookContent123)
+                .addBookContent(bookContent124);
         bookSection13
                 .addBookContent(bookContent131)
                 .addBookContent(bookContent132)
@@ -65,6 +64,7 @@ public class InitBean {
                 .addBookSection(bookSection11)
                 .addBookSection(bookSection12)
                 .addBookSection(bookSection13);
+        book.addChapter(bookChapter1);
         bookRepository.save(book);
     }
 

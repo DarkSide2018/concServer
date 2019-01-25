@@ -15,6 +15,11 @@ public class CascadeSaveMongoEventListener extends AbstractMongoEventListener<Ob
     private MongoOperations mongoOperations;
 
     @Override
+    public void onBeforeSave(BeforeSaveEvent<Object> event) {
+        super.onBeforeSave(event);
+    }
+
+    @Override
     public void onAfterConvert(AfterConvertEvent<Object> event) {
 
         super.onAfterConvert(event);
