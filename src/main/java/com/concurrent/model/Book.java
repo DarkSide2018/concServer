@@ -17,14 +17,12 @@ import java.util.Collection;
 @AllArgsConstructor
 public class Book extends BaseEn {
 
-    private String title;
-
     @DBRef(db = "bookChapters",lazy = true)
     @CascadeSave
     private Collection<BookChapter> chapterList;
 
     public Book(String title) {
-        this.title = title;
+        setTitle(title);
     }
 
     public void addChapter(BookChapter chapter) {

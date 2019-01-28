@@ -12,15 +12,14 @@ import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Document(collection="bookChapters")
+@Document(collection = "bookChapters")
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class BookChapter extends BaseEn{
+public class BookChapter extends BaseEn {
 
-    private String title;
 
     private String bookId;
 
@@ -29,7 +28,7 @@ public class BookChapter extends BaseEn{
     private Collection<BookSection> sectionList;
 
     public BookChapter(String title) {
-        this.title = title;
+        setTitle(title);
     }
 
     public BookChapter addBookSection(BookSection section) {

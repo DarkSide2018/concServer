@@ -19,8 +19,6 @@ import java.util.Collection;
 @AllArgsConstructor
 public class BookSection extends BaseEn {
 
-    private String title;
-
     private String chapterId;
 
     @Column(columnDefinition = "CLOB")
@@ -31,7 +29,7 @@ public class BookSection extends BaseEn {
     private Collection<BookContent> bookContentList;
 
     public BookSection(String title) {
-        this.title = title;
+       setTitle(title);
     }
 
     public BookSection addBookContent(BookContent bookContent) {

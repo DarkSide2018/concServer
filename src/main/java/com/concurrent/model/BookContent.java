@@ -17,15 +17,19 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 public class BookContent extends BaseEn {
 
-    private String title;
-
     private String sectionId;
+
+    public BookContent(long id, String title, String uid, String sectionId, String content) {
+        super(id, title, uid);
+        this.sectionId = sectionId;
+        this.content = content;
+    }
 
     @Column(columnDefinition = "CLOB")
     private String content;
 
     public BookContent(String title) {
-        this.title = title;
+       setTitle(title);
     }
 
 }

@@ -3,6 +3,7 @@ package com.concurrent.controller;
 import com.concurrent.model.BookContent;
 import com.concurrent.repository.BookContentMongoRep;
 import com.concurrent.service.BookService;
+import com.concurrent.transferObjects.BCeditTO;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,15 +35,15 @@ public class BookContentController {
     }
 
     @GetMapping("/bookContentById")
-    public BookContent getContentById(@RequestParam Long id) {
-        return contentRepository.findById(id).orElse(new BookContent());
+    public BCeditTO getContentById(@RequestParam Long id) {
+
+        return bookService.getContentById(id);
     }
 
     @PostMapping(value = "/bookContent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public BookContent saveContent(@RequestBody BookContent bookContent) {
-        //contentRepository.save(bookContent);
-        log.info(bookContent.toString());
-        return new BookContent();
+        contentRepository.save(bookContent);
+        return bookContent;
     }
 
     @PutMapping("/bookContent")
