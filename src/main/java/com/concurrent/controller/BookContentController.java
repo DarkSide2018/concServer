@@ -35,7 +35,7 @@ public class BookContentController {
     }
 
     @GetMapping("/bookContentById")
-    public BCeditTO getContentById(@RequestParam Long id) {
+    public BookContent getContentById(@RequestParam Long id) {
 
         return bookService.getContentById(id);
     }

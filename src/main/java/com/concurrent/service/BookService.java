@@ -4,18 +4,17 @@ import com.concurrent.model.BookContent;
 import com.concurrent.model.BookSection;
 import com.concurrent.repository.BookContentMongoRep;
 import com.concurrent.repository.BookSectionMongoRep;
-import com.concurrent.transferObjects.BCeditTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
 public class BookService {
 
-    public static final BookSection EMPTY_SECTION = new BookSection("empty");
-    public static final BookContent EMPTY_CONTENT = new BookContent("empty");
+    public static final String EMPTY = "empty";
+    public static final BookSection EMPTY_SECTION = new BookSection(EMPTY);
+    public static final BookContent EMPTY_CONTENT = new BookContent(EMPTY);
     private final BookSectionMongoRep sectionRepository;
     private final BookContentMongoRep contentMongoRep;
 
@@ -37,9 +36,10 @@ public class BookService {
                 .orElse(EMPTY_SECTION);
     }
 
-    public BCeditTO getContentById(Long id){
-        BookContent bookContent = contentMongoRep.findById(id).orElse(EMPTY_CONTENT);
-        return new BCeditTO(bookContent,new ArrayList<>());
+    public BookContent getContentById(Long id){
+        return contentMongoRep
+                .findById(id)
+                .orElse(EMPTY_CONTENT);
     }
 
 }
