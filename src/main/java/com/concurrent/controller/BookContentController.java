@@ -51,9 +51,10 @@ public class BookContentController {
         return bookContent;
     }
 
-    @DeleteMapping("/bookContent")
-    public void deleteContent(BookContent bookContent) {
-        contentRepository.delete(bookContent);
+    @DeleteMapping("/bookContent/{id}")
+    public void deleteContent(@PathVariable Long id) {
+        log.info("deleteMapping");
+        contentRepository.deleteById(id);
     }
 
 }

@@ -12,4 +12,5 @@ import java.util.Collection;
 public interface BookContentMongoRep extends MongoRepository<BookContent,Long> {
 
     Collection<BookContent> findBookContentBySectionId(String id);
+    void deleteByUid(String uid);
 }
