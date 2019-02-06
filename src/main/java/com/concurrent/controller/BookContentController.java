@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+import static com.concurrent.service.BookService.EMPTY_CONTENT;
+
 @RestController
 @Log
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,9 +36,12 @@ public class BookContentController {
     }
 
     @GetMapping("/bookContentById")
-    public BookContent getContentById(@RequestParam Long id) {
-
-        return bookService.getContentById(id);
+    public BookContent getContentById(@RequestParam String id) {
+        log.info("id = " + id);
+        if("undefined".equals(id)){
+            return EMPTY_CONTENT;
+        }
+        return bookService.getContentById(Long.valueOf(id));
     }
 
     @PostMapping(value = "/bookContent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
